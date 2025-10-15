@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceniza - Estilo & Actitud</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            padding: 40px 20px 30px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .logo-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 30px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        .brand-name {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #999999;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* Buttons Section */
+        .buttons-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px 0;
+            animation: fadeIn 1.2s ease-in;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:active::before {
+            left: 100%;
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(135deg, #833AB4 0%, #C13584 50%, #E1306C 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(193, 53, 132, 0.4);
+        }
+
+        .btn-instagram:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(193, 53, 132, 0.3);
+        }
+
+        .btn-shop {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #ffffff;
+            border: 2px solid #4a4a4a;
+            box-shadow: 0 8px 20px rgba(74, 74, 74, 0.3);
+        }
+
+        .btn-shop:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(74, 74, 74, 0.2);
+        }
+
+        .btn-locations {
+            background: linear-gradient(135deg, #404040 0%, #2d2d2d 100%);
+            color: #ffffff;
+            border: 2px solid #5a5a5a;
+            box-shadow: 0 8px 20px rgba(90, 90, 90, 0.3);
+        }
+
+        .btn-locations:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(90, 90, 90, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px 20px;
+            color: #666666;
+            font-size: 0.85rem;
+            border-top: 1px solid #2d2d2d;
+            margin-top: auto;
+        }
+
+        /* BlackPoints Page */
+        .header {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #888888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .back-btn:active {
+            color: #ffffff;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #999999;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Locations Grid */
+        .locations-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0 0 20px 0;
+        }
+
+        .location-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 1px solid #3a3a3a;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .location-card:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .location-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #ffffff;
+            border: 1px solid #5a5a5a;
+        }
+
+        .location-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            padding-right: 45px;
+        }
+
+        .address {
+            color: #cccccc;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .city {
+            color: #888888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .btn-gps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 100%);
+            border: 1px solid #5a5a5a;
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .btn-gps:active {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
+        }
+
+        .btn-gps svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments for larger screens */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 480px;
+                margin: 0 auto;
+                padding: 30px 20px;
+            }
+
+            .brand-name {
+                font-size: 3.5rem;
+            }
+
+            .btn {
+                font-size: 1.1rem;
+                padding: 20px 28px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- PÁGINA PRINCIPAL -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="logo-ceniza.png" alt="Ceniza Logo">
+                </div>
+                <h1 class="brand-name">CENIZA</h1>
+                <p class="tagline">Estilo & Actitud</p>
+            </div>
+
+            <div class="buttons-section">
+                <a href="https://www.instagram.com/cenizaok/" target="_blank" class="btn btn-instagram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                            fill="currentColor" />
+                    </svg>
+                    Seguinos en Instagram
+                </a>
+
+                <a href="https://ceniza.shop/?fbclid=PAZXh0bgNhZW0CMTEAAadhrM3MNGb-VmNk0mSZGYczXW43rHWdHSyxxK6qXEOlp5urffoEOOJvxc6pvQ_aem_DOMm8p9z0wfRCn16BILmnQ"
+                    target="_blank" class="btn btn-shop">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
+                            fill="currentColor" />
+                    </svg>
+                    Comprá Online
+                </a>
+
+                <button onclick="showBlackpoints()" class="btn btn-locations">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                            fill="currentColor" />
+                    </svg>
+                    Nuestros BlackPoints
+                </button>
+            </div>
+
+            <div class="footer">
+                <p>© 2025 Ceniza. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA BLACKPOINTS -->
+    <div id="blackpoints" class="page">
+        <div class="container">
+            <div class="header">
+                <button onclick="showHome()" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor" />
+                    </svg>
+                    Volver
+                </button>
+                <h1>NUESTROS BLACKPOINTS</h1>
+                <p class="subtitle">Encontrá el punto de venta más cercano</p>
+            </div>
+
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-number">01</div>
+                    <h3>STYLE OF HOOD</h3>
+                    <p class="address">El calden y colectora local 5</p>
+                    <p class="city">LA CAROLINA</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=El+calden+y+colectora+local+5+LA+CAROLINA"
+                        target="_blank" class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">02</div>
+                    <h3>LC BARBERS</h3>
+                    <p class="address">Av. américa y Rivadavia</p>
+                    <p class="city">ALVEAR</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av+america+y+Rivadavia+ALVEAR"
+                        target="_blank" class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">03</div>
+                    <h3>MONTANA BARBERIA</h3>
+                    <p class="address">Pasteur 2011</p>
+                    <p class="city">VILLA GOBERNADOR GÁLVEZ</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Pasteur+2011+Villa+Gobernador+Galvez"
+                        target="_blank" class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">04</div>
+                    <h3>CHIPO IL FIGA</h3>
+                    <p class="address">Juan Domingo Peron 1986</p>
+                    <p class="city">VILLA GOBERNADOR GÁLVEZ</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Juan+Domingo+Peron+1986+Villa+Gobernador+Galvez"
+                        target="_blank" class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">05</div>
+                    <h3>BARBERIA HL</h3>
+                    <p class="address">Alem 3383</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Alem+3383+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">06</div>
+                    <h3>ENEAS BARBERIA</h3>
+                    <p class="address">Bv seguí 809</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Bv+segui+809+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">07</div>
+                    <h3>DAGA NEGRA</h3>
+                    <p class="address">Pellegrini 1377</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Pellegrini+1377+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">08</div>
+                    <h3>FRATELLO HOUSE</h3>
+                    <p class="address">Urquiza 2113</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Urquiza+2113+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">09</div>
+                    <h3>SIGNATURE SALON MASCULINO</h3>
+                    <p class="address">Pichincha Bis 176</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Pichincha+Bis+176+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">10</div>
+                    <h3>ROTTERDAM BARBERIA</h3>
+                    <p class="address">Ov Lagos 1035</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ov+Lagos+1035+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">11</div>
+                    <h3>DM BARBER</h3>
+                    <p class="address">Pellegrini 5390</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Pellegrini+5390+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">12</div>
+                    <h3>SZ IMAGEN MASCULINA</h3>
+                    <p class="address">Av Alberdi 935</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av+Alberdi+935+Rosario" target="_blank"
+                        class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-number">13</div>
+                    <h3>LMG ESTILISMO</h3>
+                    <p class="address">Ignacio Warnes 2023</p>
+                    <p class="city">ROSARIO</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ignacio+Warnes+2023+Rosario"
+                        target="_blank" class="btn-gps">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor" />
+                        </svg>
+                        Cómo llegar
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>© 2025 Ceniza. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showBlackpoints() {
+            document.getElementById('home').classList.remove('active');
+            document.getElementById('blackpoints').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.getElementById('blackpoints').classList.remove('active');
+            document.getElementById('home').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+
+</html>
